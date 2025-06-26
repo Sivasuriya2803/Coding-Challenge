@@ -1,0 +1,95 @@
+                                                        API EXAM
+
+
+
+CREATE DATABASE apiexam;
+use apiexam;
+
+CREATE TABLE tasks (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    due_date DATE,
+    priority ENUM('LOW', 'MEDIUM', 'HIGH'),
+    status ENUM('PENDING', 'IN_PROGRESS', 'COMPLETED')
+);
+
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(20) DEFAULT 'USER'
+);
+
+
+Testing the API URl
+
+
+POST http://localhost:8080/auth/addNewUser
+{
+  "username": "admin",
+  "password": "admin123"
+}
+
+
+Default Role Given as User if we want we can change
+
+
+output
+"User Added Successfully"
+
+
+
+ Login & Get JWT Token
+
+POST http://localhost:8080/auth/generateToken
+
+{
+  "username": "admin",
+  "password": "admin123"
+}
+
+
+We will receive a token
+eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc1MDkxNzIyNiwiZXhwIjoxNzUwOTE5MDI2fQ.Rl8Z8iI-k0JdgrTD3z4U1J-dXXQLxMxzPNAxy77pEbc
+like this with help of this bearer token we can See the crud of this Application
+
+
+ TASK CRUD (Protected by JWT)
+
+Get All Task
+GET http://localhost:8080/auth/user/tasks
+
+Get Single Task By Id
+
+GET http://localhost:8080/auth/user/tasks/1
+
+POst a New Task
+POST http://localhost:8080/auth/user/tasks
+
+{
+  "title": "Finish Assignment",
+  "description": "Complete the Spring Boot project",
+  "dueDate": "2025-07-01",
+  "priority": "HIGH",
+  "status": "PENDING"
+}
+Put Update a Task
+PUT http://localhost:8080/auth/user/tasks/1
+{
+  "title": "Finish API Challenge",
+  "description": "Update the controller logic",
+  "dueDate": "2025-07-02",
+  "priority": "MEDIUM",
+  "status": "IN_PROGRESS"
+}
+
+
+Delete a Task
+DELETE http://localhost:8080/auth/user/tasks/1
+
+
+
+
+
